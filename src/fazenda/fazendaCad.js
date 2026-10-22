@@ -4,9 +4,9 @@ import conn from "../banco_dados/bd.js"
 const routerFazendaCadastro = Router()
 
 routerFazendaCadastro.post("/fazenda/cadastro", (req, res)=>{
-    const {nome, endereco, tamanho, cpf_usuario} = req.body
+    const {nome_fazenda, endereco, tamanho_hec, cpf_dono} = req.body
 
-    conn.query(`insert into fazenda (nome, endereco, tamanho, cpf_usuario) values ('${nome}', '${endereco}', ${tamanho}, '${cpf_usuario}')`,  (err, result)=>{
+    conn.query(`insert into fazenda (nome_fazenda, endereco, tamanho_hec, cpf_dono) values ('${nome_fazenda}', '${endereco}', ${tamanho_hec}, '${cpf_dono}')`,  (err, result)=>{
         if (err){
             console.log("Erro ao cadastrar fazenda");
             throw err
@@ -16,3 +16,5 @@ routerFazendaCadastro.post("/fazenda/cadastro", (req, res)=>{
         }
     })
 })
+
+export default routerFazendaCadastro
