@@ -6,15 +6,19 @@ const routerFazendaCadastro = Router()
 routerFazendaCadastro.post("/fazenda/cadastro", (req, res)=>{
     const {nome_fazenda, endereco, tamanho_hec, cpf_dono} = req.body
 
-    conn.query(`insert into fazenda (nome_fazenda, endereco, tamanho_hec, cpf_dono) values ('${nome_fazenda}', '${endereco}', ${tamanho_hec}, '${cpf_dono}')`,  (err, result)=>{
+    conn.query(
+        "insert into fazenda (nome_fazenda, endereco, tamanho_hec, cpf_dono) values (?, ?, ?, ?)",
+        [nome_fazenda, endereco, tamanho_hec, cpf_dono],
+        (err, result)=>{
         if (err){
             console.log("Erro ao cadastrar fazenda");
-            throw err
+            return res.status(500).json({ message: "Erro ao cadastrar fazenda" });
         } else {
             console.log("Fazenda cadastrada com sucesso");
             res.status(201).json({ message: "Fazenda cadastrada com sucesso" });
         }
     })
+    
 })
 
 export default routerFazendaCadastro

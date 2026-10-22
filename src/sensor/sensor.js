@@ -6,10 +6,13 @@ const routerSensor = Router()
 routerSensor.post("/sensor/adicionar", (req, res)=>{
     const { id_fazenda, modelo_sensor, data_instalacao } = req.body
 
-    conn.query(`insert into sensor (id_fazenda, modelo_sensor, data_instalacao) values ('${id_fazenda}', '${modelo_sensor}', '${data_instalacao}')`,  (err, result)=>{
+    conn.query(
+        "insert into sensor (id_fazenda, modelo_sensor, data_instalacao) values (?, ?, ?)",
+        [id_fazenda, modelo_sensor, data_instalacao],
+        (err, result)=>{
         if (err){
             console.log("Erro ao adicionar sensor");
-            throw err
+            return res.status(500).json({ message: "Erro ao adicionar sensor" });
         } else {
             console.log("Sensor adicionado com sucesso");
             res.status(201).json({ message: "Sensor adicionado com sucesso" });
