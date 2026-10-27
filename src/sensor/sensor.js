@@ -4,11 +4,11 @@ import conn from "../banco_dados/bd.js"
 const routerSensor = Router()
 
 routerSensor.post("/sensor/adicionar", (req, res)=>{
-    const { id_fazenda, modelo_sensor, data_instalacao } = req.body
+    const { id_fazenda, modelo_sensor, data_instalacao, ativo } = req.body
 
     conn.query(
-        "insert into sensor (id_fazenda, modelo_sensor, data_instalacao) values (?, ?, ?)",
-        [id_fazenda, modelo_sensor, data_instalacao],
+        "insert into sensor (id_fazenda, modelo_sensor, data_instalacao, ativo) values (?, ?, ?, ?)",
+        [id_fazenda, modelo_sensor, data_instalacao, ativo],
         (err, result)=>{
         if (err){
             console.log("Erro ao adicionar sensor");

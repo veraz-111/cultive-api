@@ -10,7 +10,8 @@ routerLeitura.post("/sensor/leitura", (req, res) => {
         umidade_ar,
         temperatura_ar,
         luminosidade,
-        ph_agua
+        ph_agua,
+        data_leitura
     } = req.body;
 
     if (
@@ -19,7 +20,8 @@ routerLeitura.post("/sensor/leitura", (req, res) => {
         umidade_ar === undefined ||
         temperatura_ar === undefined ||
         luminosidade === undefined ||
-        ph_agua === undefined
+        ph_agua === undefined ||
+        data_leitura === undefined
     ) {
         return res.status(400).json({
             message: "Faltam dados da leitura"
@@ -28,8 +30,8 @@ routerLeitura.post("/sensor/leitura", (req, res) => {
 
     const sql = `
         INSERT INTO leitura
-        (id_fazenda, umidade_terra, umidade_ar, temperatura_ar, luminosidade, ph_agua)
-        VALUES (?, ?, ?, ?, ?, ?)
+        (id_fazenda, umidade_terra, umidade_ar, temperatura_ar, luminosidade, ph_agua, data_leitura)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     const valores = [
@@ -38,7 +40,8 @@ routerLeitura.post("/sensor/leitura", (req, res) => {
         umidade_ar,
         temperatura_ar,
         luminosidade,
-        ph_agua
+        ph_agua,
+        data_leitura
     ];
 
     conn.query(sql, valores, (err, result) => {
